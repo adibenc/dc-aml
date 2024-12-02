@@ -1,0 +1,10 @@
+services:
+  mc3:
+    image: continuumio/miniconda3:24.7.1-0
+    container_name: mc3
+    # command: "while true;sleep 1;done"
+    # command: "watch -n 1 'echo hb1'"
+    entrypoint: ["/app/ent.sh",]
+    volumes:
+      - ./src:/app/
+      - ./mc3/ent.sh:/app/ent.sh
