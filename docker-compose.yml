@@ -4,7 +4,7 @@ services:
 # wip nginx
   nx-main:
     container_name: nx-main
-    build: ./app-waf
+    build: ./nx
     restart: always
     ports:
       # - 443:443
