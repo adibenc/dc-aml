@@ -32,7 +32,7 @@ services:
     container_name: php8
     restart: always
     ports:
-      - 8000:8000
+      - 8000
     volumes:
       - ${NX_ROOT_WEB}:/var/www/html/
       # still contain errors
@@ -60,10 +60,9 @@ services:
     volumes:
       # add for passwd
       # tf default mounts
-      - .jupyter/:/root/.jupyter/
+      - ./pyx/.jupyter/:/root/.jupyter/
       # - jupyter_server_config.json:/root/.jupyter/jupyter_server_config.json
-      - ./notebooks:/tf/notebooks
-      - ./dist-packages/:/usr/local/lib/python3.11/dist-packages/
+      - ${VOL_TF_DIST}:/usr/local/lib/python3.11/dist-packages/
       - ${VOL_TF_USER}:/tf/user/
       # masonite mounts
       - ./tmp:/tmp/local
@@ -80,6 +79,7 @@ services:
       - TZ=UTC
       # - JUPYTER_PASSWORD_HASH: ${JUPYTER_PASSWORD_HASH}
       - ZENML_CONNECT_URL=${ZENML_CONNECT_URL}
+      - APP_INIT_TYPE=${APP_INIT_TYPE}
     extra_hosts:
       - "l1:172.17.0.1"
       - "host.docker.internal:host-gateway"
