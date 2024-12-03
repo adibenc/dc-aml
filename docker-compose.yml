@@ -68,7 +68,7 @@ services:
       - ./tmp:/tmp/local
       - ${VOL_MAIN_PY_DIR}:/app
       - ${APP_DCK_SHARED_DIR}:/var/shared/
-    # command: bash -c "/app/setup.sh" # wip
+    command: bash -c "/app/setup.sh" # wip
     healthcheck:
       test: ["CMD", "echo"]
       interval: 5m30s
