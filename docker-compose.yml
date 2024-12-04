@@ -12,6 +12,7 @@ services:
     volumes:
       - ${NX_ROOT_WEB}:/var/www/html
       - $PWD/etc/nginx/conf.d/web.conf:/etc/nginx/conf.d/default.conf
+      - $PWD/etc/nginx/conf.d/_base-php8.conf:/etc/nginx/conf.d/_base-php8.conf
       - $PWD/etc/nginx/conf.d/gf/gf.conf:/etc/nginx/conf.d/gf/gf.conf
       # - $PWD/etc/nginx/conf.d/ssl/:/etc/ssl/
       - "$PWD/etc/modsecurity:/etc/modsecurity"
