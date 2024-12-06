@@ -49,7 +49,7 @@ services:
   
   tfm-jupyter:
     image: tensorflow/tensorflow:latest-jupyter
-    container_name: pyx-tfm
+    container_name: tfm-jupyter
     restart: always
     ports:
       - "8888:8888"
