@@ -47,6 +47,41 @@ services:
       - "h14:10.110.212.14"
       - "host.docker.internal:host-gateway"
   
+  tfm-jupyter:
+    image: tensorflow/tensorflow:latest-jupyter
+    container_name: pyx-tfm
+    restart: always
+    ports:
+      - "8888:8888"
+    volumes:
+      # add for passwd
+      # tf default mounts
+      - ./pyx/.jupyter/:/root/.jupyter/
+      # - jupyter_server_config.json:/root/.jupyter/jupyter_server_config.json
+      - ${VOL_TF_DIST}:/usr/local/lib/python3.11/dist-packages/
+      - ${VOL_TF_USER}:/tf/user/
+      # masonite mounts
+      - ./tmp:/tmp/local
+      - ${VOL_MAIN_PY_DIR}:/app
+      - ${APP_DCK_SHARED_DIR}:/var/shared/
+    # command: bash -c "/app/setup.sh" # wip
+    healthcheck:
+      test: ["CMD", "echo"]
+      interval: 5m30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+    environment:
+      - TZ=UTC
+      # - JUPYTER_PASSWORD_HASH: ${JUPYTER_PASSWORD_HASH}
+      - ZENML_CONNECT_URL=${ZENML_CONNECT_URL}
+      - APP_INIT_TYPE=${APP_INIT_TYPE}
+    extra_hosts:
+      - "l1:172.17.0.1"
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
+  
   # wip use tensorflow image
   # tensorflow + masonite
   pyx-tfm:
@@ -57,7 +92,7 @@ services:
     restart: always
     ports:
       - ${DOCKER_APP_MS3_PORT}:8000
-      - "8888:8888"
+      # - "8888:8888"
     volumes:
       # add for passwd
       # tf default mounts
