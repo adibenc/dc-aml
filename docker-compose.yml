@@ -64,8 +64,10 @@ services:
       - ./tmp:/tmp/local
       - ${VOL_MAIN_PY_DIR}:/app
       - ${APP_DCK_SHARED_DIR}:/var/shared/
+      - ${HOST_ROOT}:/tf/root/
     # command: bash -c "/app/setup.sh" # wip
     healthcheck:
+      # wip
       test: ["CMD", "echo"]
       interval: 5m30s
       timeout: 10s
@@ -92,6 +94,7 @@ services:
     restart: always
     ports:
       - ${DOCKER_APP_MS3_PORT}:8000
+      - ${DOCKER_APP_FA_PORT}:8001
       # - "8888:8888"
     volumes:
       # add for passwd
@@ -106,7 +109,7 @@ services:
       - ${APP_DCK_SHARED_DIR}:/var/shared/
     command: bash -c "/app/setup.sh" # wip
     healthcheck:
-      test: ["CMD", "echo"]
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/"]
       interval: 5m30s
       timeout: 10s
       retries: 3
@@ -122,34 +125,40 @@ services:
     stdin_open: true
     tty: true
   
-  # cyper service
-  neo4j:
-    image: neo4j:4.4.37-community
-    ports:
-      - "7474:7474"
-      - "7687:7687"
-    volumes:
-      # - $HOME/neo4j/data:/data
-      - ./var/neo4j/data:/data
-      - ${APP_DCK_SHARED_DIR}:/var/shared/
-    
-  zenml:
-    image: zenmldocker/zenml-server
-    container_name: zenml
-    ports:
-      - "8080:8080"
-    environment:
-      - ZENML_STORE_URL=${ZENML_STORE_URL}
-    # links:
-    #   - mysql
-    # depends_on:
-    #   - mysql
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    # restart: on-failure
+  tiara-tfm:
+    # image: tensorflow/tensorflow:latest-jupyter
+    # build: .
+    build: ./src/ms-aml
+    container_name: tiara-tfm
     restart: always
+    ports:
+      - ${DOCKER_APP_TFA_PORT}:8000
     volumes:
+      - ./pyx/.jupyter/:/root/.jupyter/
+      # - jupyter_server_config.json:/root/.jupyter/jupyter_server_config.json
+      - ${VOL_TF_DIST}:/usr/local/lib/python3.11/dist-packages/
+      - ${VOL_TF_USER}:/tf/user/
+      # masonite mounts
+      - ./tmp:/tmp/local
+      - ${VOL_TIARA_PY_DIR}:/app-tiara/
       - ${APP_DCK_SHARED_DIR}:/var/shared/
+    command: bash -c "/app-tiara/setup.sh" # wip
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/api/"]
+      interval: 5m30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+    environment:
+      - TZ=UTC
+      # - JUPYTER_PASSWORD_HASH: ${JUPYTER_PASSWORD_HASH}
+      - ZENML_CONNECT_URL=${ZENML_CONNECT_URL}
+      - TIARA_INIT_TYPE=${TIARA_INIT_TYPE}
+    extra_hosts:
+      - "l1:172.17.0.1"
+      - "host.docker.internal:host-gateway"
+    stdin_open: true
+    tty: true
   
   # 2024 q4 use redis from host
   # redis:
