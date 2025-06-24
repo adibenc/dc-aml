@@ -154,6 +154,9 @@ services:
       # - JUPYTER_PASSWORD_HASH: ${JUPYTER_PASSWORD_HASH}
       - ZENML_CONNECT_URL=${ZENML_CONNECT_URL}
       - TIARA_INIT_TYPE=${TIARA_INIT_TYPE}
+      # for typical poetry env or something similar
+      - PATH=/root/.local/bin:$PATH
+
     extra_hosts:
       - "l1:172.17.0.1"
       - "host.docker.internal:host-gateway"
