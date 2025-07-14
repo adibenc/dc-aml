@@ -158,13 +158,29 @@ services:
       - TIARA_INIT_TYPE=${TIARA_INIT_TYPE}
       # for typical poetry env or something similar
       - PATH=/root/.local/bin:$PATH
-
     extra_hosts:
       - "l1:172.17.0.1"
       - "host.docker.internal:host-gateway"
     stdin_open: true
     tty: true
   
+  tiara-next:
+    build: ./src/tiara-next
+    container_name: "tiara-next"
+    restart: always
+    ports:
+      - 3004:3000 
+    volumes:
+      - ./tmp:/tmp/local
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/api/"]
+      interval: 5m30s
+      timeout: 10s
+      retries: 3
+      start_period: 2m
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
   # 2024 q4 use redis from host
   # redis:
   #   build: ./redis/
