@@ -142,6 +142,7 @@ services:
       - ${VOL_TF_USER}:/tf/user/
       # masonite mounts
       - ./tmp:/tmp/local
+      - ./tmp/x:/tmp/x
       - ${VOL_TIARA_PY_DIR}:/app-tiara/
       - ${APP_DCK_SHARED_DIR}:/var/shared/
     command: bash -c "/app-tiara/setup.sh" # wip
