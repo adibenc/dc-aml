@@ -141,8 +141,7 @@ services:
       - ${VOL_TF_DIST}:/usr/local/lib/python3.11/dist-packages/
       - ${VOL_TF_USER}:/tf/user/
       # masonite mounts
-      - ./tmp:/tmp/local
-      - ./tmp/x:/tmp/x
+      - ./tmp/:/tmp/
       - ${VOL_TIARA_PY_DIR}:/app-tiara/
       - ${APP_DCK_SHARED_DIR}:/var/shared/
     command: bash -c "/app-tiara/setup.sh" # wip
