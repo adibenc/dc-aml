@@ -44,6 +44,7 @@ services:
       - $PWD/etc/php-fpm.d/www.conf:/usr/local/etc/php-fpm.d/www.conf
       - "./phpsocket:/var/run"
       - ${APP_DCK_SHARED_DIR}:/var/shared/
+      - ${APP_DCK_SHARED_DIR}:/var/www/html/tiara-lara/public/storage/
     extra_hosts:
       - "l1:172.17.0.1"
       - "h14:10.110.212.14"
