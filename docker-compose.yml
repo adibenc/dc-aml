@@ -24,6 +24,7 @@ services:
       - "./var/log/nginx:/var/log/nginx"
       - "./phpsocket:/var/run"
       - ${APP_DCK_SHARED_DIR}:/var/shared/
+      - ${APP_DCK_SHARED_DIR}:/var/www/html/tiara-lara/public/storage/
     depends_on:
       - php8
     extra_hosts:
