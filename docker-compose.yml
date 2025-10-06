@@ -33,6 +33,7 @@ services:
     
   meili:
     image: getmeili/meilisearch:v1.11
+    container_name: meili
     ports:
       - 7700:7700
     environment:
