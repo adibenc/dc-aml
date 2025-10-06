@@ -30,6 +30,16 @@ services:
     extra_hosts:
       - "l1:172.17.0.1"
       - "host.docker.internal:host-gateway"
+    
+  meili:
+    image: getmeili/meilisearch:v1.11
+    ports:
+      - 7700:7700
+    environment:
+      - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
+    extra_hosts:
+      - "l1:172.17.0.1"
+      - "host.docker.internal:host-gateway"
 
   php8:
     build: ./php8
