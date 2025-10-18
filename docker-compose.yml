@@ -36,6 +36,8 @@ services:
     container_name: meili
     ports:
       - 7700:7700
+    volumes:
+      - ./meili_data:/meili_data
     environment:
       - MEILI_MASTER_KEY=${MEILI_MASTER_KEY}
     extra_hosts:
