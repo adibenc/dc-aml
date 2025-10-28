@@ -77,6 +77,7 @@ services:
       # - jupyter_server_config.json:/root/.jupyter/jupyter_server_config.json
       - ${VOL_TF_DIST}:/usr/local/lib/python3.11/dist-packages/
       - ${VOL_TF_USER}:/tf/user/
+      - ${VOL_TF_USER2}:/tf/user2/
       # masonite mounts
       - ./tmp:/tmp/local
       - ${VOL_MAIN_PY_DIR}:/app
@@ -155,6 +156,7 @@ services:
       # - jupyter_server_config.json:/root/.jupyter/jupyter_server_config.json
       - ${VOL_TF_DIST}:/usr/local/lib/python3.11/dist-packages/
       - ${VOL_TF_USER}:/tf/user/
+      - ${VOL_TF_USER2}:/tf/user2/
       # masonite mounts
       - ./tmp/:/tmp/
       - ${VOL_TIARA_PY_DIR}:/app-tiara/
