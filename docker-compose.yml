@@ -199,11 +199,12 @@ services:
       - "host.docker.internal:host-gateway"
 
   trr:
-    build: ./src/tiara-react-js
+    build: .
     container_name: "trr"
     restart: always
     ports:
       - ${D_PORT}:4173
+      - ${D_PORT}:80
     # network_mode: host
     volumes:
       - ./tmp:/tmp/local
