@@ -198,6 +198,17 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
+  trr:
+    build: ./src/tiara-react-js
+    container_name: "trr"
+    restart: always
+    ports:
+      - ${D_PORT}:4173
+    # network_mode: host
+    volumes:
+      - ./tmp:/tmp/local
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
   # 2024 q4 use redis from host
   # redis:
   #   build: ./redis/
